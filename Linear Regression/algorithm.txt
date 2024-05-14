@@ -15,26 +15,26 @@ for _ in range(n_iters):
         p=p+bias
         y_pred.append(p)
 
-        res=[]
-        for i,j in zip(y_pred,enc_y_train):
-            p=i-j # paillier: p=i+(-1*(j))
-            res.append(p)
+    res=[]
+    for i,j in zip(y_pred,enc_y_train):
+        p=i-j # paillier: p=i+(-1*(j))
+        res.append(p)
 
-        enc_x_train_1=[]
-        ptsd=list(np.zeros(n_features))
-        for i in enc_X_train:
-            p=i*weights
-            ptsd=ptsd+p
+    enc_x_train_1=[]
+    ptsd=list(np.zeros(n_features))
+    for i,j in zip(enc_X_train,res):
+        p=i*j
+        ptsd=ptsd+p
 
-        dw=1/n_samples*ptsd
+    dw=1/n_samples*ptsd
 
-        weights=weights-lr*dw
+    weights=weights-lr*dw
 
-        y_sum=0
-        for i in y_pred:
-            y_sum=y_sum+i
+    y_sum=0
+    for i in y_pred:
+        y_sum=y_sum+i
 
-        db=y_sum*(1/n_samples)
-        bias=bias-(lr*db)
+    db=y_sum*(1/n_samples)
+    bias=bias-(lr*db)
 
         
